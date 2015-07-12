@@ -1,7 +1,7 @@
 ## Script builds a histogram of Global Active Power on 7/1 and 7/2 of 2007. Based on 
 ## the Electric Power Consumption data set of the UC Irvine Machine Learning Repository.
 ## The script will download the file in a folder within the workign directory called
-## machinlearningdata
+## machinlearningdata. The historgram will be stored as plot1.png
 
 ##Download and Unzip File
 if(!file.exists("./machinelearningdata")){dir.create("./machinelearningdata")}
@@ -25,8 +25,8 @@ unzip("./machinelearningdata/household_power_consumption.zip",exdir="./machinele
 
     ## Only need 2/1/2007 and 2/2/2007 for charts
 
-        startdate <- as.POSIXlt("2007-02-01 00:00:00", format="%Y-%m-%d %H:%M:%S")
-        enddate <- as.POSIXlt("2007-02-02 23:59:59.9999999", format="%Y-%m-%d %H:%M:%S")
+        startdate <- as.POSIXlt("2007-02-01 00:00:00", format="%Y-%m-%d %H:%M:%S", tz="UTC")
+        enddate <- as.POSIXlt("2007-02-02 23:59:59.9999999", format="%Y-%m-%d %H:%M:%S", tz="UTC")
         powerdata <- powerdata[(powerdata$DateTime >= startdate) & (powerdata$DateTime <= enddate) ,]
 
 ## Build histgram
@@ -35,4 +35,4 @@ unzip("./machinelearningdata/household_power_consumption.zip",exdir="./machinele
     hist(powerdata$Global_active_power, col="red", main="Global Active Power", 
          xlab="Global Active Power (kilowats)", ylab="Frequency")
     dev.off()
-    message(paste("Table Complete. Stored as ",getwd(),"/",outfile,sep=""))
+    message(paste("Chart Complete. Stored as ",getwd(),"/",outfile,sep=""))
